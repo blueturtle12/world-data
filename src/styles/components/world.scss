@@ -49,6 +49,7 @@
     }
     div:first-child {
       height: 80%;
+      border-color: #efefef !important;
     }
   }
   .content__last-ten {
@@ -60,10 +61,15 @@
     height: 80%;
     width: 20%;
     margin-top: 5%;
+    text-align: center;
     @media (max-width: 768px), (max-height: 768px) {
       width: 80%;
       margin: 0 auto;
       height: 30%;
+    }
+
+    canvas {
+      height: 80% !important;
     }
   }
 }

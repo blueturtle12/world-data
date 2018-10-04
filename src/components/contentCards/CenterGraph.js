@@ -1,37 +1,20 @@
 import React, { Component } from 'react';
 import { Line as LineChart } from 'react-chartjs-2';
+import PropTypes from 'prop-types';
+import InputRange from 'react-input-range';
 
-function chartData() {
+function chartData(data) {
+  data.reverse();
+  let yearArr = data.map(years => years.year);
+  let popArr = data.map(years => years.value);
   return {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: yearArr,
     datasets: [
       {
-        label: 'First',
-        fillColor: 'rgba(220,220,220,0.2)',
-        strokeColor: 'rgba(220,220,220,1)',
-        pointColor: 'rgba(220,220,220,1)',
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(220,220,220,1)',
-        data: [65, 59, 80, 81, 56, 55, 40],
-      },
-    ],
-  };
-}
-
-function chartData2() {
-  return {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-      {
-        label: 'Second',
-        fillColor: 'rgba(151,187,205,0.2)',
-        strokeColor: 'rgba(151,187,205,1)',
-        pointColor: 'rgba(151,187,205,1)',
-        pointStrokeColor: '#fff',
-        pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(151,187,205,1)',
-        data: [28, 48, 40, 19, 86, 27, 90],
+        label: 'Total world population',
+        backgroundColor: 'rgba(92, 134, 147, 0.2)',
+        pointBackgroundColor: 'rgba(92, 134, 147, 1)',
+        data: popArr,
       },
     ],
   };
@@ -41,7 +24,7 @@ const options = {
   responsive: true,
   maintainAspectRatio: false,
   scaleShowGridLines: true,
-  scaleGridLineColor: 'rgba(0,0,0,.05)',
+  scaleGridLineColor: 'rgba(92, 134, 147, 1)',
   scaleGridLineWidth: 1,
   scaleShowHorizontalLines: true,
   scaleShowVerticalLines: true,
@@ -67,29 +50,45 @@ const styles = {
 
 export default class CenterGraph extends Component {
   state = {
-    data: chartData(),
+    data: {},
+    rangeValues: { min: 1980, max: 2010 },
+    completeRangeValues: { min: 1980, max: 2010 },
   };
+  UNSAFE_componentWillMount() {
+    if (this.props.worldPop.length !== 0) {
+      this.getChartData();
+    }
+  }
+  getChartData() {
+    let cData = chartData(this.props.worldPop);
+    this.setState({ data: cData });
+  }
   render() {
     return (
       <div className="content__graph">
         <div style={styles.graphContainer}>
           <LineChart data={this.state.data} options={options} />
         </div>
-        <button
-          onClick={() => {
-            this.setState({ data: chartData2() });
+        <InputRange
+          maxValue={2017}
+          minValue={1970}
+          value={this.state.rangeValues}
+          onChange={value => this.setState({ rangeValues: value })}
+          onChangeComplete={value => {
+            this.setState({ completeRangeValues: value });
+            let filteredData = this.props.worldPop.filter(
+              years =>
+                parseInt(years.year) >= value.min &&
+                parseInt(years.year) <= value.max,
+            );
+            this.setState({ data: chartData(filteredData.reverse()) });
           }}
-        >
-          change1
-        </button>
-        <button
-          onClick={() => {
-            this.setState({ data: chartData() });
-          }}
-        >
-          change2
-        </button>
+        />
       </div>
     );
   }
 }
+
+CenterGraph.propTypes = {
+  worldPop: PropTypes.array,
+};
