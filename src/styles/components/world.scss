@@ -47,6 +47,9 @@
       margin: 0 auto;
       height: 30%;
     }
+    div:first-child {
+      height: 80%;
+    }
   }
   .content__last-ten {
     /*grid-column: 13 / span 3;

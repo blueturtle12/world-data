@@ -38,6 +38,8 @@ function chartData2() {
 }
 
 const options = {
+  responsive: true,
+  maintainAspectRatio: false,
   scaleShowGridLines: true,
   scaleGridLineColor: 'rgba(0,0,0,.05)',
   scaleGridLineWidth: 1,
@@ -71,12 +73,7 @@ export default class CenterGraph extends Component {
     return (
       <div className="content__graph">
         <div style={styles.graphContainer}>
-          <LineChart
-            data={this.state.data}
-            options={options}
-            width={600}
-            height={400}
-          />
+          <LineChart data={this.state.data} options={options} />
         </div>
         <button
           onClick={() => {
