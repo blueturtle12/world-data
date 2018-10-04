@@ -1,0 +1,29 @@
+@import "./components/headerFiles/toolbar";
+@import "./components/headerFiles/sideDrawer";
+@import "./components/headerFiles/drawerToggleButton";
+@import "./components/headerFiles/backDrop";
+@import "./components/homePage";
+@import "./components/routerPages";
+@import "./components/population";
+@import "./components/world";
+@import "./components/contentCards";
+
+body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+}
+
+#root {
+  height: 100%;
+}
+
+header {
+  height: 10%;
+}
+
+main {
+  height: 90%;
+  padding: 0;
+  margin: 0;
+}

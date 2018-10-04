@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "last",
+    "prettier/react",
+    "plugin:react/recommended"
+  ],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "all"
+      }
+    ],
+    "eqeqeq": ["error", "always"],
+    "no-console": 0
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "amd": true
+  }
+}
