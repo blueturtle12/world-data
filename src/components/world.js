@@ -9,7 +9,7 @@ const World = props => {
     <div className="world-content">
       <TopTen />
       <CenterGraph worldPop={props.worldPop} />
-      <LastTenYears />
+      <LastTenYears worldPop={props.worldPop} />
     </div>
   );
 };

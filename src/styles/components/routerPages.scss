@@ -94,5 +94,18 @@
   .router-page__content {
     height: 78%;
     width: 100%;
+
+    .router-page__loader {
+      height: 100%;
+      width: 100%;
+
+      div:first-child {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   }
 }

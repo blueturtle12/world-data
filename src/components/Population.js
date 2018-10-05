@@ -51,12 +51,14 @@ class Population extends Component {
               }
             })()
           ) : (
-            <Loader
-              type="RevolvingDot"
-              color="#00BFFF"
-              height="100"
-              width="100"
-            />
+            <div className="router-page__loader">
+              <Loader
+                type="RevolvingDot"
+                color="#5c8693"
+                height="150"
+                width="150"
+              />
+            </div>
           )}
         </section>
       </section>

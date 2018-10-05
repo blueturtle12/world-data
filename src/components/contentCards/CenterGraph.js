@@ -43,7 +43,7 @@ const options = {
 
 const styles = {
   graphContainer: {
-    border: '1px solid black',
+    border: '1px solid #efefef',
     padding: '15px',
   },
 };
