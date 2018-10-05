@@ -4,7 +4,7 @@ export const getWorldData = () => dispatch => {
   dispatch(fetchWorldDataBegin());
   axios
     .get(
-      'http://api.worldbank.org/v2/countries/WLD/indicators/SP.POP.TOTL/?format=json&date=1970:2017',
+      'https://api.worldbank.org/v2/countries/WLD/indicators/SP.POP.TOTL/?format=json&date=1970:2017',
     )
     .then(res =>
       dispatch(
