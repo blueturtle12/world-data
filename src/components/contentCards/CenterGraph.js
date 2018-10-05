@@ -6,12 +6,12 @@ import InputRange from 'react-input-range';
 function chartData(data) {
   data.reverse();
   let yearArr = data.map(years => years.year);
-  let popArr = data.map(years => years.value);
+  let popArr = data.map(years => (years.value / 1000000000).toFixed(2));
   return {
     labels: yearArr,
     datasets: [
       {
-        label: 'Total world population',
+        label: 'Total world population in Billions',
         backgroundColor: 'rgba(92, 134, 147, 0.2)',
         pointBackgroundColor: 'rgba(92, 134, 147, 1)',
         data: popArr,
@@ -37,8 +37,6 @@ const options = {
   datasetStroke: true,
   datasetStrokeWidth: 2,
   datasetFill: true,
-  legendTemplate:
-    '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].strokeColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
 };
 
 const styles = {
@@ -51,10 +49,10 @@ const styles = {
 export default class CenterGraph extends Component {
   state = {
     data: {},
-    rangeValues: { min: 1980, max: 2010 },
-    completeRangeValues: { min: 1980, max: 2010 },
+    rangeValues: { min: 1980, max: 2017 },
+    completeRangeValues: { min: 1980, max: 2017 },
   };
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     if (this.props.worldPop.length !== 0) {
       this.getChartData();
     }
@@ -71,7 +69,7 @@ export default class CenterGraph extends Component {
         </div>
         <InputRange
           maxValue={2017}
-          minValue={1970}
+          minValue={1980}
           value={this.state.rangeValues}
           onChange={value => this.setState({ rangeValues: value })}
           onChangeComplete={value => {

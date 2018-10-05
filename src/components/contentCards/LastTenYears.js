@@ -6,13 +6,13 @@ const chartData = data => {
   let filteredArr = data.filter(years => parseInt(years.year) >= 2007);
   filteredArr.reverse();
   let yearArr = filteredArr.map(years => years.year);
-  let popArr = filteredArr.map(years => years.value);
+  let popArr = filteredArr.map(years => (years.value / 1000000000).toFixed(2));
 
   return {
     labels: yearArr,
     datasets: [
       {
-        label: 'Last ten years',
+        label: 'Last ten years population in Billions',
         backgroundColor: 'rgba(92, 134, 147, 0.2)',
         borderColor: 'rgba(92, 134, 147, 1)',
         borderWidth: 1,

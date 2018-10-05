@@ -1,21 +1,53 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import TopTen from './contentCards/TopTen';
 import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
 import CenterGraph from './contentCards/CenterGraph';
 import LastTenYears from './contentCards/LastTenYears';
+import { getWorldData } from '../actions/ApiCalls';
 
-const World = props => {
-  return (
-    <div className="world-content">
-      <TopTen />
-      <CenterGraph worldPop={props.worldPop} />
-      <LastTenYears worldPop={props.worldPop} />
-    </div>
-  );
-};
+class World extends Component {
+  componentDidMount() {
+    this.props.getWorldData();
+  }
+  render() {
+    return this.props.loading ? (
+      <div className="router-page__loader">
+        <Loader type="RevolvingDot" color="#5c8693" height="150" width="150" />
+      </div>
+    ) : (
+      <div className="world-content">
+        <TopTen />
+        <CenterGraph worldPop={this.props.worldPop} />
+        <LastTenYears worldPop={this.props.worldPop} />
+      </div>
+    );
+  }
+}
 
 World.propTypes = {
+  getWorldData: PropTypes.func,
   worldPop: PropTypes.array,
+  loading: PropTypes.bool,
 };
 
-export default World;
+const mapStateToProps = state => {
+  return {
+    worldPop: state.population.worldPop,
+    loading: state.population.worldPopLoading,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getWorldData: () => {
+      dispatch(getWorldData());
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(World);
