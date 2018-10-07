@@ -9,7 +9,7 @@ export const getWorldData = () => dispatch => {
     .then(res =>
       dispatch(
         fetchWorldDataSuccess(
-          res.data[1].map(obj => ({
+          res.data[1].reverse().map(obj => ({
             value: obj.value,
             year: obj.date,
           })),

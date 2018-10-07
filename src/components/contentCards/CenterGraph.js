@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import InputRange from 'react-input-range';
 
 function chartData(data) {
-  data.reverse();
+  //data.reverse();
   let yearArr = data.map(years => years.year);
   let popArr = data.map(years => (years.value / 1000000000).toFixed(2));
   return {
@@ -79,7 +79,7 @@ export default class CenterGraph extends Component {
                 parseInt(years.year) >= value.min &&
                 parseInt(years.year) <= value.max,
             );
-            this.setState({ data: chartData(filteredData.reverse()) });
+            this.setState({ data: chartData(filteredData) });
           }}
         />
       </div>

@@ -9,7 +9,9 @@ import { getWorldData } from '../actions/ApiCalls';
 
 class World extends Component {
   componentDidMount() {
-    this.props.getWorldData();
+    if (this.props.worldPop.length === 0) {
+      this.props.getWorldData();
+    }
   }
   render() {
     return this.props.loading ? (

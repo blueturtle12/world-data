@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import TopTen from './contentCards/TopTen';
 import Loader from 'react-loader-spinner';
 import PieChart from './contentCards/PieChart';
+import BarChart from './contentCards/BarChart';
 import { getRegionData } from '../actions/ApiCalls';
 
 class Region extends Component {
   componentDidMount() {
-    this.props.getRegionData();
+    if (this.props.regionPop.length === 0) {
+      this.props.getRegionData();
+    }
   }
   render() {
     return this.props.loading ? (
@@ -16,9 +18,9 @@ class Region extends Component {
         <Loader type="RevolvingDot" color="#5c8693" height="150" width="150" />
       </div>
     ) : (
-      <div className="world-content">
-        <TopTen />
+      <div className="region-content">
         <PieChart regionPop={this.props.regionPop} />
+        <BarChart regionPop={this.props.regionPop} />
       </div>
     );
   }
