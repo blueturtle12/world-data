@@ -1,11 +1,31 @@
+@import "./base/variables";
+
 .router-page {
   background-color: #efefef;
   height: 100%;
+
+  @media (max-width: $tabletMobilesLandscapeMax) {
+    height: 180%;
+  }
+  @media (max-width: $smallMobileMax) {
+    height: 220%;
+  }
+  @media (min-width: $mobileMin) and (max-width: $tabletMobilesLandscapeMax) and (orientation: landscape) {
+    height: 320%;
+  }
+  @media (max-height: 361px) and (orientation: landscape) {
+    height: 360%;
+  }
 
   .router-page__header {
     text-align: center;
     height: 20%;
     font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+
+    @media (max-width: $tabletMobilesLandscapeMax) {
+      height: 10%;
+      min-height: 150px;
+    }
 
     h1 {
       margin: 0;
@@ -14,10 +34,10 @@
       font-weight: 200;
       color: #5c8693;
 
-      @media (max-width: 768px), (max-height: 768px) {
+      @media (max-width: 768px) {
         font-size: 3rem;
       }
-      @media (max-width: 400px), (max-height: 400px) {
+      @media (max-width: 400px) {
         font-size: 2rem;
       }
     }
@@ -31,7 +51,7 @@
       span {
         color: #ff3b3f;
         font-size: 2rem;
-        @media (max-width: 768px), (max-height: 768px) {
+        @media (max-width: 768px) {
           font-size: 1.5rem;
         }
       }
@@ -58,7 +78,7 @@
         background-size: 5px 5px, 5px 5px, 2.5em 2.5em;
         background-repeat: no-repeat;
 
-        @media (max-width: 768px), (max-height: 768px) {
+        @media (max-width: 768px) {
           line-height: 1.3em;
         }
 

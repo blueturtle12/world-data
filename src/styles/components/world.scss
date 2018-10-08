@@ -1,13 +1,15 @@
+@import "./base/variables";
+
 .world-content {
   display: flex;
   height: 100%;
   flex-direction: row;
   justify-content: space-evenly;
+  background-color: #efefef;
 
-  @media (max-width: 768px), (max-height: 768px) {
-    background-color: #efefef;
+  @media (max-width: $tabletMobilesLandscapeMax) {
+    //background-color: #efefef;
     flex-wrap: wrap;
-    height: 200%;
     margin-top: 5%;
   }
 
@@ -19,8 +21,9 @@
     height: 80%;
     width: 20%;
     margin-top: 3%;
+    min-height: 280px;
 
-    @media (max-width: 768px), (max-height: 768px) {
+    @media (max-width: $tabletMobilesLandscapeMax) {
       width: 80%;
       margin: 0 auto;
       height: 30%;
@@ -33,7 +36,8 @@
     height: 80%;
     width: 40%;
     margin-top: 3%;
-    @media (max-width: 768px), (max-height: 768px) {
+    min-height: 280px;
+    @media (max-width: $tabletMobilesLandscapeMax) {
       width: 80%;
       margin: 0 auto;
       height: 30%;
@@ -50,7 +54,8 @@
     width: 20%;
     margin-top: 3%;
     text-align: center;
-    @media (max-width: 768px), (max-height: 768px) {
+    min-height: 280px;
+    @media (max-width: $tabletMobilesLandscapeMax) {
       width: 80%;
       margin: 0 auto;
       height: 30%;
@@ -65,7 +70,7 @@
 .region-content {
   @extend .world-content;
 
-  @media (max-width: 768px), (max-height: 768px) {
+  @media (max-width: $tabletMobilesLandscapeMax) {
     background-color: #efefef;
     flex-wrap: wrap;
     height: 120%;
@@ -79,7 +84,8 @@
     height: 80%;
     width: 40%;
     margin-top: 3%;
-    @media (max-width: 768px), (max-height: 768px) {
+    min-height: 280px;
+    @media (max-width: $tabletMobilesLandscapeMax) {
       width: 80%;
       margin: 0 auto;
       height: 45%;
