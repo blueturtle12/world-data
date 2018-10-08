@@ -3,15 +3,23 @@ import { Line as LineChart } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import InputRange from 'react-input-range';
 
-function chartData(data) {
+function chartData(data, dataType) {
   //data.reverse();
   let yearArr = data.map(years => years.year);
-  let popArr = data.map(years => (years.value / 1000000000).toFixed(2));
+  let popArr;
+  let labelType;
+  if (dataType === 'world') {
+    popArr = data.map(years => (years.value / 1000000000).toFixed(2));
+    labelType = 'Total world population in Billions';
+  } else if (dataType === 'country') {
+    popArr = data.map(years => (years.value / 1000000).toFixed(2));
+    labelType = 'Total population in Millions';
+  }
   return {
     labels: yearArr,
     datasets: [
       {
-        label: 'Total world population in Billions',
+        label: labelType,
         backgroundColor: 'rgba(92, 134, 147, 0.2)',
         pointBackgroundColor: 'rgba(92, 134, 147, 1)',
         data: popArr,
@@ -58,7 +66,7 @@ export default class CenterGraph extends Component {
     }
   }
   getChartData() {
-    let cData = chartData(this.props.worldPop);
+    let cData = chartData(this.props.worldPop, this.props.dataType);
     this.setState({ data: cData });
   }
   render() {
@@ -79,7 +87,9 @@ export default class CenterGraph extends Component {
                 parseInt(years.year) >= value.min &&
                 parseInt(years.year) <= value.max,
             );
-            this.setState({ data: chartData(filteredData) });
+            this.setState({
+              data: chartData(filteredData, this.props.dataType),
+            });
           }}
         />
       </div>
@@ -89,4 +99,5 @@ export default class CenterGraph extends Component {
 
 CenterGraph.propTypes = {
   worldPop: PropTypes.array,
+  dataType: PropTypes.string,
 };

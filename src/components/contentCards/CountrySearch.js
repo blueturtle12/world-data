@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { getCountryData } from '../../actions/ApiCallsCountry';
 
-export default class CountrySearch extends Component {
+class CountrySearch extends Component {
   state = {
     searchText: '',
   };
+  componentDidMount() {
+    if (this.props.country.length === 0) {
+      this.props.getCountryData('UA');
+    }
+  }
   HandleSearch = e => {
     this.setState({ searchText: e.target.value });
+  };
+  HandleClick = countryCode => {
+    this.props.getCountryData(countryCode);
   };
   render() {
     let countryList = this.props.countryList.map((country, index) => {
@@ -16,7 +26,12 @@ export default class CountrySearch extends Component {
           .indexOf(this.state.searchText.toUpperCase()) > -1
       ) {
         return (
-          <li key={index} className="country-list__item">
+          <li
+            key={index}
+            className="country-list__item"
+            value={country.alpha2Code}
+            onClick={() => this.HandleClick(country.alpha2Code)}
+          >
             <span className="country-list__item__name">{country.name}</span>
             <span
               className="country-list__flag"
@@ -47,4 +62,27 @@ export default class CountrySearch extends Component {
 
 CountrySearch.propTypes = {
   countryList: PropTypes.array,
+  loadingCountry: PropTypes.bool,
+  country: PropTypes.array,
+  getCountryData: PropTypes.func,
 };
+
+const mapStateToProps = state => {
+  return {
+    loadingCountry: state.countryList.searchedCountryLoading,
+    country: state.countryList.searchedCountry,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getCountryData: country => {
+      dispatch(getCountryData(country));
+    },
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CountrySearch);

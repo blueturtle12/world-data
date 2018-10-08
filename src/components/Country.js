@@ -6,24 +6,30 @@ import CenterGraph from './contentCards/CenterGraph';
 import LastTenYears from './contentCards/LastTenYears';
 import CountrySearch from './contentCards/CountrySearch';
 import { getWorldData } from '../actions/ApiCalls';
-import { getAllCountriesData } from '../actions/ApiCallsCountry';
+import {
+  getAllCountriesData,
+  getCountryData,
+} from '../actions/ApiCallsCountry';
 
 class Country extends Component {
   componentDidMount() {
     if (this.props.countryList.length === 0) {
       this.props.getAllCountriesData();
     }
+    /*if (this.props.country.length === 0) {
+      this.props.getCountryData('UA');
+    }*/
   }
   render() {
-    return this.props.loading ? (
+    return this.props.loading || this.props.loadingCountry ? (
       <div className="router-page__loader">
         <Loader type="RevolvingDot" color="#5c8693" height="150" width="150" />
       </div>
     ) : (
       <div className="world-content">
         <CountrySearch countryList={this.props.countryList} />
-        <CenterGraph worldPop={this.props.worldPop} />
-        <LastTenYears worldPop={this.props.worldPop} />
+        <CenterGraph worldPop={this.props.country} dataType={'country'} />
+        <LastTenYears worldPop={this.props.country} dataType={'country'} />
       </div>
     );
   }
@@ -35,6 +41,9 @@ Country.propTypes = {
   worldPop: PropTypes.array,
   countryList: PropTypes.array,
   loading: PropTypes.bool,
+  loadingCountry: PropTypes.bool,
+  country: PropTypes.array,
+  getCountryData: PropTypes.func,
 };
 
 const mapStateToProps = state => {
@@ -42,6 +51,8 @@ const mapStateToProps = state => {
     worldPop: state.population.worldPop,
     loading: state.countryList.countryListLoading,
     countryList: state.countryList.countryList,
+    loadingCountry: state.countryList.searchedCountryLoading,
+    country: state.countryList.searchedCountry,
   };
 };
 
@@ -52,6 +63,9 @@ const mapDispatchToProps = dispatch => {
     },
     getAllCountriesData: () => {
       dispatch(getAllCountriesData());
+    },
+    getCountryData: country => {
+      dispatch(getCountryData(country));
     },
   };
 };

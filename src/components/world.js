@@ -21,8 +21,8 @@ class World extends Component {
     ) : (
       <div className="world-content">
         <TopTen />
-        <CenterGraph worldPop={this.props.worldPop} />
-        <LastTenYears worldPop={this.props.worldPop} />
+        <CenterGraph worldPop={this.props.worldPop} dataType={'world'} />
+        <LastTenYears worldPop={this.props.worldPop} dataType={'world'} />
       </div>
     );
   }

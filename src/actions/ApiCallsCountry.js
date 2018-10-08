@@ -26,3 +26,33 @@ export const fetchAllCountriesSuccess = data => ({
 
 export const FETCH_ALL_COUNTRIES_BEGIN = 'FETCH_ALL_COUNTRIES_BEGIN';
 export const FETCH_ALL_COUNTRIES_SUCCESS = 'FETCH_ALL_COUNTRIES_SUCCESS';
+
+export const getCountryData = country => dispatch => {
+  dispatch(fetchCountryDataBegin());
+  axios
+    .get(
+      `http://api.worldbank.org/v2/countries/${country}/indicators/SP.POP.TOTL?format=json&date=1980:2017&per_page=500`,
+    )
+    .then(res =>
+      dispatch(
+        fetchCountryDataSuccess(
+          res.data[1].reverse().map(obj => ({
+            value: obj.value,
+            year: obj.date,
+          })),
+        ),
+      ),
+    );
+};
+
+export const fetchCountryDataBegin = () => ({
+  type: FETCH_COUNTRY_DATA_BEGIN,
+});
+
+export const fetchCountryDataSuccess = data => ({
+  type: FETCH_COUNTRY_DATA_SUCCESS,
+  payload: { data },
+});
+
+export const FETCH_COUNTRY_DATA_BEGIN = 'FETCH_COUNTRY_DATA_BEGIN';
+export const FETCH_COUNTRY_DATA_SUCCESS = 'FETCH_COUNTRY_DATA_SUCCESS';
