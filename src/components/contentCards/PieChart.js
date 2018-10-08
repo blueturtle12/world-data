@@ -3,13 +3,16 @@ import { Doughnut } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import InputRange from 'react-input-range';
 
-const chartData = (data, year) => {
+const chartData = (data, year, router) => {
   let filteredArr = data.filter(years => parseInt(years.year) === year);
   filteredArr.reverse();
-  //let yearArr = filteredArr.map(years => years.year);
   let nameArr = filteredArr.map(years => years.region);
-  let popArr = filteredArr.map(years => (years.value / 1000000).toFixed(2));
-
+  let popArr;
+  if (router === 'population') {
+    popArr = filteredArr.map(years => (years.value / 1000000).toFixed(2));
+  } else if (router === 'life' || router === 'fert') {
+    popArr = filteredArr.map(years => years.value.toFixed(2));
+  }
   return {
     labels: nameArr,
     datasets: [
@@ -48,8 +51,8 @@ const styles = {
 class PieChart extends Component {
   state = {
     data: {},
-    rangeValue: 2017,
-    completeRangeValue: 2017,
+    rangeValue: 2016,
+    completeRangeValue: 2016,
   };
   componentDidMount() {
     if (this.props.regionPop.length !== 0) {
@@ -57,7 +60,7 @@ class PieChart extends Component {
     }
   }
   getChartData() {
-    let pieData = chartData(this.props.regionPop, 2017);
+    let pieData = chartData(this.props.regionPop, 2016, this.props.router);
     this.setState({ data: pieData });
   }
   render() {
@@ -73,7 +76,9 @@ class PieChart extends Component {
           onChange={value => this.setState({ rangeValue: value })}
           onChangeComplete={value => {
             this.setState({ completeRangeValue: value });
-            this.setState({ data: chartData(this.props.regionPop, value) });
+            this.setState({
+              data: chartData(this.props.regionPop, value, this.props.router),
+            });
           }}
         />
       </div>
@@ -83,6 +88,7 @@ class PieChart extends Component {
 
 PieChart.propTypes = {
   regionPop: PropTypes.array,
+  router: PropTypes.string,
 };
 
 export default PieChart;

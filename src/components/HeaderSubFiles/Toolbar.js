@@ -26,7 +26,7 @@ const Toolbar = props => {
             </li>
             <li>
               <NavLink className="toolbar__link" to="/lifexp">
-                Life expactancy
+                Life expectancy
               </NavLink>
             </li>
             <li>

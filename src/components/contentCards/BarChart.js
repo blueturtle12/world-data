@@ -2,18 +2,28 @@ import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 
-const chartData = data => {
-  let filteredArr = data.filter(years => parseInt(years.year) === 2017);
+const chartData = (data, router) => {
+  let filteredArr = data.filter(years => parseInt(years.year) === 2016);
   filteredArr.reverse();
   //let yearArr = filteredArr.map(years => years.year);
   let nameArr = filteredArr.map(years => years.region);
-  let popArr = filteredArr.map(years => (years.value / 1000000).toFixed(2));
-
+  let popArr;
+  if (router === 'population') {
+    popArr = filteredArr.map(years => (years.value / 1000000).toFixed(2));
+  } else if (router === 'life' || router === 'fert') {
+    popArr = filteredArr.map(years => years.value.toFixed(2));
+  }
+  let label =
+    router === 'population'
+      ? 'Population in millions'
+      : router === 'life'
+        ? 'Life expectancy'
+        : 'Fertility rate';
   return {
     labels: nameArr,
     datasets: [
       {
-        label: 'population in Millions 2017',
+        label: `${label} 2016`,
         backgroundColor: [
           'rgba(92, 134, 147, 0.2)',
           '#F7464A',
@@ -54,7 +64,7 @@ class BarChart extends Component {
     }
   }
   getChartData() {
-    let barData = chartData(this.props.regionPop);
+    let barData = chartData(this.props.regionPop, this.props.router);
     this.setState({ data: barData });
   }
   render() {
@@ -70,6 +80,7 @@ class BarChart extends Component {
 
 BarChart.propTypes = {
   regionPop: PropTypes.array,
+  router: PropTypes.string,
 };
 
 export default BarChart;

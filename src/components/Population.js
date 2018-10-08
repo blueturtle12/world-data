@@ -35,11 +35,11 @@ class Population extends Component {
           {(() => {
             switch (this.state.geoLocation) {
               case 'world':
-                return <World />;
+                return <World router={'population'} />;
               case 'region':
-                return <Region />;
+                return <Region router={'population'} />;
               case 'country':
-                return <Country />;
+                return <Country router={'population'} />;
             }
           })()}
         </section>

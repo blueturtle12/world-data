@@ -27,9 +27,34 @@ class Country extends Component {
       </div>
     ) : (
       <div className="world-content">
-        <CountrySearch countryList={this.props.countryList} />
-        <CenterGraph worldPop={this.props.country} dataType={'country'} />
-        <LastTenYears worldPop={this.props.country} dataType={'country'} />
+        <CountrySearch
+          countryList={this.props.countryList}
+          router={this.props.router}
+        />
+        <CenterGraph
+          worldPop={
+            this.props.router === 'population'
+              ? this.props.country
+              : this.props.router === 'life'
+                ? this.props.countryLife
+                : this.props.countryFert
+          }
+          dataType={'country'}
+          countryName={this.props.countryName}
+          router={this.props.router}
+        />
+        <LastTenYears
+          worldPop={
+            this.props.router === 'population'
+              ? this.props.country
+              : this.props.router === 'life'
+                ? this.props.countryLife
+                : this.props.countryFert
+          }
+          dataType={'country'}
+          countryName={this.props.countryName}
+          router={this.props.router}
+        />
       </div>
     );
   }
@@ -44,6 +69,10 @@ Country.propTypes = {
   loadingCountry: PropTypes.bool,
   country: PropTypes.array,
   getCountryData: PropTypes.func,
+  countryName: PropTypes.string,
+  router: PropTypes.string,
+  countryLife: PropTypes.array,
+  countryFert: PropTypes.array,
 };
 
 const mapStateToProps = state => {
@@ -53,6 +82,9 @@ const mapStateToProps = state => {
     countryList: state.countryList.countryList,
     loadingCountry: state.countryList.searchedCountryLoading,
     country: state.countryList.searchedCountry,
+    countryName: state.countryList.countryName,
+    countryLife: state.countryList.searchedCountryLife,
+    countryFert: state.countryList.searchedCountryFert,
   };
 };
 

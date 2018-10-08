@@ -1,22 +1,41 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getCountryData } from '../../actions/ApiCallsCountry';
+import {
+  getCountryData,
+  fetchCountryDataName,
+  getCountryLifeData,
+  getCountryFertData,
+} from '../../actions/ApiCallsCountry';
 
 class CountrySearch extends Component {
   state = {
     searchText: '',
   };
   componentDidMount() {
-    if (this.props.country.length === 0) {
-      this.props.getCountryData('UA');
+    if (this.props.router === 'population') {
+      if (this.props.country.length === 0) {
+        this.props.getCountryData('UA');
+        this.props.fetchCountryDataName('ukraine');
+      }
+    } else if (this.props.router === 'life') {
+      if (this.props.countryLife.length === 0) {
+        this.props.getCountryLifeData('UA');
+        this.props.fetchCountryDataName('ukraine');
+      }
+    } else if (this.props.router === 'fert') {
+      if (this.props.countryFert.length === 0) {
+        this.props.getCountryFertData('UA');
+        this.props.fetchCountryDataName('ukraine');
+      }
     }
   }
   HandleSearch = e => {
     this.setState({ searchText: e.target.value });
   };
-  HandleClick = countryCode => {
+  HandleClick = (countryCode, name) => {
     this.props.getCountryData(countryCode);
+    this.props.fetchCountryDataName(name);
   };
   render() {
     let countryList = this.props.countryList.map((country, index) => {
@@ -30,7 +49,7 @@ class CountrySearch extends Component {
             key={index}
             className="country-list__item"
             value={country.alpha2Code}
-            onClick={() => this.HandleClick(country.alpha2Code)}
+            onClick={() => this.HandleClick(country.alpha2Code, country.name)}
           >
             <span className="country-list__item__name">{country.name}</span>
             <span
@@ -65,12 +84,20 @@ CountrySearch.propTypes = {
   loadingCountry: PropTypes.bool,
   country: PropTypes.array,
   getCountryData: PropTypes.func,
+  getCountryLifeData: PropTypes.func,
+  getCountryFertData: PropTypes.func,
+  fetchCountryDataName: PropTypes.func,
+  countryLife: PropTypes.array,
+  countryFert: PropTypes.array,
+  router: PropTypes.string,
 };
 
 const mapStateToProps = state => {
   return {
     loadingCountry: state.countryList.searchedCountryLoading,
     country: state.countryList.searchedCountry,
+    countryLife: state.countryList.searchedCountryLife,
+    countryFert: state.countryList.searchedCountryFert,
   };
 };
 
@@ -78,6 +105,15 @@ const mapDispatchToProps = dispatch => {
   return {
     getCountryData: country => {
       dispatch(getCountryData(country));
+    },
+    getCountryLifeData: country => {
+      dispatch(getCountryLifeData(country));
+    },
+    getCountryFertData: country => {
+      dispatch(getCountryFertData(country));
+    },
+    fetchCountryDataName: name => {
+      dispatch(fetchCountryDataName(name));
     },
   };
 };

@@ -3,18 +3,37 @@ import { Line as LineChart } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import InputRange from 'react-input-range';
 
-function chartData(data, dataType) {
+function chartData(data, dataType, name, router) {
   //data.reverse();
   let yearArr = data.map(years => years.year);
   let popArr;
   let labelType;
-  if (dataType === 'world') {
-    popArr = data.map(years => (years.value / 1000000000).toFixed(2));
-    labelType = 'Total world population in Billions';
-  } else if (dataType === 'country') {
-    popArr = data.map(years => (years.value / 1000000).toFixed(2));
-    labelType = 'Total population in Millions';
+  if (router === 'population') {
+    if (dataType === 'world') {
+      popArr = data.map(years => (years.value / 1000000000).toFixed(2));
+      labelType = 'Total world population in Billions';
+    } else if (dataType === 'country') {
+      popArr = data.map(years => (years.value / 1000000).toFixed(2));
+      labelType = `${name} Total population in Millions`;
+    }
+  } else if (router === 'life') {
+    if (dataType === 'world') {
+      popArr = data.map(years => years.value.toFixed(2));
+      labelType = 'Average world life expectancy';
+    } else if (dataType === 'country') {
+      popArr = data.map(years => years.value.toFixed(2));
+      labelType = `${name} average life expectancy`;
+    }
+  } else if (router === 'fert') {
+    if (dataType === 'world') {
+      popArr = data.map(years => years.value.toFixed(2));
+      labelType = 'Average world fertility rate';
+    } else if (dataType === 'country') {
+      popArr = data.map(years => years.value.toFixed(2));
+      labelType = `${name} average fertility rate`;
+    }
   }
+
   return {
     labels: yearArr,
     datasets: [
@@ -66,7 +85,12 @@ export default class CenterGraph extends Component {
     }
   }
   getChartData() {
-    let cData = chartData(this.props.worldPop, this.props.dataType);
+    let cData = chartData(
+      this.props.worldPop,
+      this.props.dataType,
+      this.props.countryName,
+      this.props.router,
+    );
     this.setState({ data: cData });
   }
   render() {
@@ -88,7 +112,12 @@ export default class CenterGraph extends Component {
                 parseInt(years.year) <= value.max,
             );
             this.setState({
-              data: chartData(filteredData, this.props.dataType),
+              data: chartData(
+                filteredData,
+                this.props.dataType,
+                this.props.countryName,
+                this.props.router,
+              ),
             });
           }}
         />
@@ -100,4 +129,6 @@ export default class CenterGraph extends Component {
 CenterGraph.propTypes = {
   worldPop: PropTypes.array,
   dataType: PropTypes.string,
+  countryName: PropTypes.string,
+  router: PropTypes.string,
 };

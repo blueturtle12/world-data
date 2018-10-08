@@ -22,7 +22,7 @@ export const getRegionData = () => dispatch => {
   dispatch(fetchRegionDataBegin());
   axios
     .get(
-      'https://api.worldbank.org/v2/countries/EAS;ECS;LCN;MEA;SSF;NAC/indicators/SP.POP.TOTL/?format=json&date=1980:2017&per_page=200',
+      'https://api.worldbank.org/v2/countries/EAS;ECS;LCN;MEA;SSF;NAC/indicators/SP.POP.TOTL/?format=json&date=1980:2017&per_page=250',
     )
     .then(res =>
       dispatch(
