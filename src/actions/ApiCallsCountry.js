@@ -31,7 +31,7 @@ export const getCountryData = country => dispatch => {
   dispatch(fetchCountryDataBegin());
   axios
     .get(
-      `http://api.worldbank.org/v2/countries/${country}/indicators/SP.POP.TOTL?format=json&date=1980:2017&per_page=500`,
+      `https://api.worldbank.org/v2/countries/${country}/indicators/SP.POP.TOTL?format=json&date=1980:2017&per_page=500`,
     )
     .then(res =>
       dispatch(
