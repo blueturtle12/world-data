@@ -1,3 +1,5 @@
+@import "./base/variables";
+
 @mixin title {
   text-transform: uppercase;
   background-repeat: no-repeat;
@@ -14,6 +16,10 @@
   display: flex;
   flex-direction: row;
 
+  @media (max-width: $mobileMax) {
+    flex-wrap: wrap;
+  }
+
   .home__pop-redirect,
   .home__life-redirect,
   .home__fert-redirect {
@@ -25,8 +31,26 @@
     outline: none;
     text-decoration: none;
 
+    @media (max-width: $mobileMax) {
+      height: calc(100% / 3);
+      width: 100%;
+    }
+
     h1 {
       font-size: 4rem;
+
+      @media (min-width: $tabletsMax) and (max-width: 1600px) {
+        font-size: 3rem;
+      }
+      @media (min-width: $tabletMobilesLandscapeMax) and (max-width: 1280px) {
+        font-size: 2.5rem;
+      }
+      @media (min-width: $tabletsMobileLandscapeMin) and (max-width: 1024px) {
+        font-size: 2rem;
+      }
+      @media (max-width: $mobileMax) {
+        font-size: 2rem;
+      }
     }
   }
 
