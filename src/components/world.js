@@ -34,7 +34,7 @@ class World extends Component {
       </div>
     ) : (
       <div className="world-content">
-        <TopTen />
+        <TopTen router={this.props.router} />
         <CenterGraph
           worldPop={
             this.props.router === 'population'

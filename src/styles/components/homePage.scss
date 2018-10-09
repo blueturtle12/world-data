@@ -1,8 +1,97 @@
+@mixin title {
+  text-transform: uppercase;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  font-weight: 700;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .home-page {
-    background-color: #EFEFEF;
+  background-color: #efefef;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .home__pop-redirect,
+  .home__life-redirect,
+  .home__fert-redirect {
     height: 100%;
-    
+    width: calc(100% / 3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    text-decoration: none;
+
     h1 {
-        margin: 0;
+      font-size: 4rem;
     }
+  }
+
+  .home__pop-redirect {
+    -webkit-transition: background 1000ms ease-in;
+    -ms-transition: background 1000ms ease-in;
+    transition: background 1000ms ease-in;
+
+    h1 {
+      @include title;
+      background-image: url("../img/population.jpg");
+    }
+    &:hover {
+      background-image: url("../img/population.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+
+      h1 {
+        background-origin: none;
+        -webkit-text-fill-color: #efefef;
+      }
+    }
+  }
+
+  .home__life-redirect {
+    -webkit-transition: background 1000ms ease-in;
+    -ms-transition: background 1000ms ease-in;
+    transition: background 1000ms ease-in;
+
+    h1 {
+      @include title;
+      background-image: url("../img/life.jpg");
+    }
+    &:hover {
+      background-image: url("../img/life.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+
+      h1 {
+        background-origin: none;
+        -webkit-text-fill-color: #efefef;
+      }
+    }
+  }
+  .home__fert-redirect {
+    -webkit-transition: background 1000ms ease-in;
+    -ms-transition: background 1000ms ease-in;
+    transition: background 1000ms ease-in;
+
+    h1 {
+      @include title;
+      background-image: url("../img/fert.jpeg");
+    }
+    &:hover {
+      background-image: url("../img/fert.jpeg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+
+      h1 {
+        background-origin: none;
+        -webkit-text-fill-color: #efefef;
+      }
+    }
+  }
 }
