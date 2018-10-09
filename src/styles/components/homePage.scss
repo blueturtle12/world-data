@@ -2,12 +2,8 @@
 
 @mixin title {
   text-transform: uppercase;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
   font-weight: 700;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: white;
 }
 
 .home-page {
@@ -58,10 +54,10 @@
     -webkit-transition: background 1000ms ease-in;
     -ms-transition: background 1000ms ease-in;
     transition: background 1000ms ease-in;
+    background: #8bb6c3;
 
     h1 {
       @include title;
-      background-image: url("../img/population.jpg");
     }
     &:hover {
       background-image: url("../img/population.jpg");
@@ -80,10 +76,10 @@
     -webkit-transition: background 1000ms ease-in;
     -ms-transition: background 1000ms ease-in;
     transition: background 1000ms ease-in;
+    background: #5c8693;
 
     h1 {
       @include title;
-      background-image: url("../img/life.jpg");
     }
     &:hover {
       background-image: url("../img/life.jpg");
@@ -101,10 +97,10 @@
     -webkit-transition: background 1000ms ease-in;
     -ms-transition: background 1000ms ease-in;
     transition: background 1000ms ease-in;
+    background: #2f5965;
 
     h1 {
       @include title;
-      background-image: url("../img/fert.jpeg");
     }
     &:hover {
       background-image: url("../img/fert.jpeg");
