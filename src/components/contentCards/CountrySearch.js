@@ -16,26 +16,34 @@ class CountrySearch extends Component {
     if (this.props.router === 'population') {
       if (this.props.country.length === 0) {
         this.props.getCountryData('UA');
-        this.props.fetchCountryDataName('ukraine');
+        this.props.fetchCountryDataName('Ukraine');
       }
     } else if (this.props.router === 'life') {
       if (this.props.countryLife.length === 0) {
         this.props.getCountryLifeData('UA');
-        this.props.fetchCountryDataName('ukraine');
+        this.props.fetchCountryDataName('Ukraine');
       }
     } else if (this.props.router === 'fert') {
       if (this.props.countryFert.length === 0) {
         this.props.getCountryFertData('UA');
-        this.props.fetchCountryDataName('ukraine');
+        this.props.fetchCountryDataName('Ukraine');
       }
     }
   }
   HandleSearch = e => {
     this.setState({ searchText: e.target.value });
   };
-  HandleClick = (countryCode, name) => {
-    this.props.getCountryData(countryCode);
-    this.props.fetchCountryDataName(name);
+  HandleClick = (countryCode, name, router) => {
+    if (router === 'population') {
+      this.props.getCountryData(countryCode);
+      this.props.fetchCountryDataName(name);
+    } else if (router === 'life') {
+      this.props.getCountryLifeData(countryCode);
+      this.props.fetchCountryDataName(name);
+    } else if (router === 'fert') {
+      this.props.getCountryFertData(countryCode);
+      this.props.fetchCountryDataName(name);
+    }
   };
   render() {
     let countryList = this.props.countryList.map((country, index) => {
@@ -49,7 +57,13 @@ class CountrySearch extends Component {
             key={index}
             className="country-list__item"
             value={country.alpha2Code}
-            onClick={() => this.HandleClick(country.alpha2Code, country.name)}
+            onClick={() =>
+              this.HandleClick(
+                country.alpha2Code,
+                country.name,
+                this.props.router,
+              )
+            }
           >
             <span className="country-list__item__name">{country.name}</span>
             <span
